@@ -1,8 +1,9 @@
+#!/usr/bin/env ruby
 # Encoding: utf-8
 #
-# Authors:: api.dklimkin@gmail.com (Danial Klimkin)
+# Author:: api.dklimkin@gmail.com (Danial Klimkin)
 #
-# Copyright:: Copyright 2010, Google Inc. All Rights Reserved.
+# Copyright:: Copyright 2012, Google Inc. All Rights Reserved.
 #
 # License:: Licensed under the Apache License, Version 2.0 (the "License");
 #           you may not use this file except in compliance with the License.
@@ -17,22 +18,13 @@
 #           See the License for the specific language governing permissions and
 #           limitations under the License.
 #
-# Rakefile for the ads_common package.
+# Test suite for unit tests.
 
-desc 'Default target - build.'
-task :default => [:build]
+require 'test/unit'
 
-desc 'Package the Common library into a gem file.'
-task :build do
-  system 'gem build google-ads-common.gemspec'
-end
+$:.unshift File.expand_path('../../lib/', __FILE__)
+$:.unshift File.expand_path('../../', __FILE__)
 
-desc 'Perform the unit testing.'
-task :test do
-  system 'ruby test/suite_unittests.rb'
-end
-
-desc 'Run tests coverage tool.'
-task :coverage do
-  system 'ruby test/coverage.rb'
-end
+# Ads Common units tests.
+test_files_mask = File.join(File.dirname(__FILE__), 'test_*.rb')
+Dir.glob(test_files_mask).each {|file| require file}
